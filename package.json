@@ -1,6 +1,6 @@
 {
   "name": "yaddb",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Yet Another Dynamo Data Base Library",
   "main": "src/yaddb.js",
   "scripts": {
