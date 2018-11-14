@@ -1,15 +1,15 @@
 {
   "name": "yaddb",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Yet Another Dynamo Data Base Library",
-  "main": "src/index.js",
+  "main": "src/yaddb.js",
   "scripts": {
     "dynamodb": "docker run -p 8000:8000 amazon/dynamodb-local ",
     "test": "jest",
     "pretty": "prettier --write **/*.js",
     "lint": "eslint . --ext .js"
   },
-  "author": "",
+  "author": "devops@labrador.co.uk",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^5.9.0",
@@ -21,11 +21,11 @@
     "jest": "^23.6.0",
     "lint-staged": "^8.0.4",
     "npm-check-updates": "^2.14.3",
-    "prettier": "^1.14.3"
+    "prettier": "^1.14.3",
+    "eslint-plugin-jest": "^22.0.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.355.0",
-    "eslint-plugin-jest": "^22.0.0"
+    "aws-sdk": "^2.355.0"
   },
   "husky": {
     "hooks": {
@@ -46,5 +46,23 @@
       "json",
       "html"
     ]
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/labradorcouk/yaddb.git"
+  },
+  "keywords": [
+    "dynamodb",
+    "aws",
+    "client",
+    "dynamo",
+    "amazon"
+  ],
+  "bugs": {
+    "url": "https://github.com/labradorcouk/yaddb/issues"
+  },
+  "homepage": "https://github.com/labradorcouk/yaddb#readme"
 }
