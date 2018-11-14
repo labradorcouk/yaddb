@@ -41,6 +41,11 @@ class Yaddb {
   }
 
   async scan(params) {
+    const resolved = await this.docClient.scan(params).promise();
+    return resolved;
+  }
+
+  async recursiveScan(params) {
     let promiseResults = [];
     async function innerScan(p, self) {
       const data = await self.docClient.scan(p).promise();
