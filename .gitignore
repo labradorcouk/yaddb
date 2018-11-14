@@ -1,0 +1,11 @@
+# Coverage
+coverage
+
+# OSX
+.DS_Store
+
+# package directories
+node_modules
+
+# IDEs
+.vscode

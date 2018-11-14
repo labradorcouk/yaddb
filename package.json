@@ -1,0 +1,50 @@
+{
+  "name": "yaddb",
+  "version": "1.0.0",
+  "description": "Yet Another Dynamo Data Base Library",
+  "main": "src/index.js",
+  "scripts": {
+    "dynamodb": "docker run -p 8000:8000 amazon/dynamodb-local ",
+    "test": "jest",
+    "pretty": "prettier --write **/*.js",
+    "lint": "eslint . --ext .js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "3.0.0",
+    "husky": "^1.1.2",
+    "jest": "^23.6.0",
+    "lint-staged": "^8.0.4",
+    "npm-check-updates": "^2.14.3",
+    "prettier": "^1.14.3"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.355.0",
+    "eslint-plugin-jest": "^22.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "npm run pretty",
+      "npm run lint",
+      "npm run test",
+      "git add"
+    ]
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
+  }
+}
