@@ -5,7 +5,8 @@
     "name": "Toyota Yaris",
     "manufacturer": "Toyota",
     "fuel_type": "Petrol",
-    "description": "A smooth ride"
+    "description": "A smooth ride",
+    "status": "ON_SALE"
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "name": "Volkswagen Golf",
     "manufacturer": "Volkswagen",
     "fuel_type": "Petrol",
-    "description": "Good Value"
+    "description": "Good Value",
+    "status": "ON_SALE"
   },
   {
     "id": 3,
@@ -21,6 +23,16 @@
     "name": "Model 3",
     "manufacturer": "Tesla",
     "fuel_type": "Electric",
-    "description": "Best Car"
+    "description": "Best Car",
+    "status": "ON_SALE"
+  },
+  {
+    "id": 4,
+    "type": "Manual",
+    "name": "Toyota AA",
+    "manufacturer": "Toyota",
+    "fuel_type": "Petrol",
+    "description": "A smooth ride",
+    "status": "RETIRED"
   }
 ]

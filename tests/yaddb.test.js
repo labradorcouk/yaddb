@@ -10,8 +10,14 @@ const yaddb = require("../src/yaddb")({
 beforeAll(async done => {
   await yaddb.createTable({
     TableName: "Cars",
-    KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
-    AttributeDefinitions: [{ AttributeName: "id", AttributeType: "N" }],
+    KeySchema: [
+      { AttributeName: "id", KeyType: "HASH" },
+      { AttributeName: "status", KeyType: "RANGE" }
+    ],
+    AttributeDefinitions: [
+      { AttributeName: "id", AttributeType: "N" },
+      { AttributeName: "status", AttributeType: "S" }
+    ],
     ProvisionedThroughput: {
       ReadCapacityUnits: 5,
       WriteCapacityUnits: 5
@@ -26,7 +32,8 @@ beforeAll(async done => {
         name: car.name,
         manufacturer: car.manufacturer,
         fuel_type: car.fuel_type,
-        description: car.description
+        description: car.description,
+        status: car.status
       }
     };
     await yaddb.put(putParams);
@@ -45,14 +52,16 @@ test("get", async () => {
   const carOne = await yaddb.get({
     TableName: "Cars",
     Key: {
-      id: 1
+      id: 1,
+      status: "ON_SALE"
     }
   });
 
   const carTwo = await yaddb.get({
     TableName: "Cars",
     Key: {
-      id: 2
+      id: 2,
+      status: "ON_SALE"
     }
   });
 
@@ -62,17 +71,46 @@ test("get", async () => {
     id: 1,
     manufacturer: "Toyota",
     name: "Toyota Yaris",
-    type: "Automatic"
+    type: "Automatic",
+    status: "ON_SALE"
   });
+
   expect(carTwo).toEqual({
     description: "Good Value",
     fuel_type: "Petrol",
     id: 2,
     manufacturer: "Volkswagen",
     name: "Volkswagen Golf",
-    type: "Manual"
+    type: "Manual",
+    status: "ON_SALE"
   });
 });
+
+test("query", async () => {
+  const retiredCars = await yaddb.query({
+    TableName: "Cars",
+    KeyConditionExpression: "#id = :id and #status = :status",
+    ExpressionAttributeNames: {
+      "#id": "id",
+      "#status": "status"
+    },
+    ExpressionAttributeValues: {
+      ":id": 4,
+      ":status": "RETIRED"
+    }
+  });
+
+  expect(retiredCars[0]).toEqual({
+    id: 4,
+    type: "Manual",
+    name: "Toyota AA",
+    manufacturer: "Toyota",
+    fuel_type: "Petrol",
+    description: "A smooth ride",
+    status: "RETIRED"
+  });
+});
+
 test("scan", async () => {
   const allCars = await yaddb.scan({
     TableName: "Cars",
@@ -88,12 +126,13 @@ test("scan", async () => {
     }
   });
 
-  expect(allCars.length).toBe(3);
+  expect(allCars.length).toBe(4);
 });
+
 test("update", async () => {
   await yaddb.update({
     TableName: "Cars",
-    Key: { id: 1 },
+    Key: { id: 1, status: "ON_SALE" },
     UpdateExpression: "set #fuel_type = :fuel_type",
     ExpressionAttributeNames: { "#fuel_type": "fuel_type" },
     ExpressionAttributeValues: {
@@ -104,7 +143,8 @@ test("update", async () => {
   const car = await yaddb.get({
     TableName: "Cars",
     Key: {
-      id: 1
+      id: 1,
+      status: "ON_SALE"
     }
   });
 
@@ -114,20 +154,22 @@ test("update", async () => {
     id: 1,
     manufacturer: "Toyota",
     name: "Toyota Yaris",
-    type: "Automatic"
+    type: "Automatic",
+    status: "ON_SALE"
   });
 });
 
 test("delete", async () => {
   await yaddb.delete({
     TableName: "Cars",
-    Key: { id: 1 }
+    Key: { id: 1, status: "ON_SALE" }
   });
 
   const car = await yaddb.get({
     TableName: "Cars",
     Key: {
-      id: 1
+      id: 1,
+      status: "ON_SALE"
     }
   });
 

@@ -27,8 +27,9 @@ class Yaddb {
     return this.docClient.delete(params).promise();
   }
 
-  query(params) {
-    return this.docClient.query(params).promise();
+  async query(params) {
+    const resolved = await this.docClient.query(params).promise();
+    return resolved.Items;
   }
 
   createTable(params) {
