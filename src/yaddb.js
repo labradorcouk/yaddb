@@ -1,11 +1,24 @@
-const AWS = require("aws-sdk");
+const AWS = require('aws-sdk');
+const https = process.env.NODE_ENV === 'test' ? require('http') : require('https');
+
+const sslAgent = new https.Agent({
+  keepAlive: true,
+  maxSockets: 50,
+  rejectUnauthorized: true,
+});
+sslAgent.setMaxListeners(0);
 
 class Yaddb {
   /**
    * See https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property
    */
   constructor(options) {
-    AWS.config.update({ region: options.region });
+    AWS.config.update({
+      region: options.region,
+      // httpOptions: {
+      //   agent: sslAgent,
+      // },
+    });
     this.ddb = new AWS.DynamoDB(options);
     this.docClient = new AWS.DynamoDB.DocumentClient(options);
   }
@@ -54,7 +67,7 @@ class Yaddb {
         return innerScan(
           {
             ...p,
-            ...{ ExclusiveStartKey: data.LastEvaluatedKey }
+            ...{ ExclusiveStartKey: data.LastEvaluatedKey },
           },
           self
         );

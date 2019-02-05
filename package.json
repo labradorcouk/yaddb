@@ -1,11 +1,11 @@
 {
   "name": "yaddb",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Yet Another Dynamo Data Base Library",
   "main": "src/yaddb.js",
   "scripts": {
     "dynamodb": "docker run -p 8000:8000 amazon/dynamodb-local ",
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "pretty": "prettier --write **/*.js",
     "lint": "eslint . --ext .js"
   },
@@ -14,11 +14,11 @@
   "devDependencies": {
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-prettier": "^3.3.0",
+    "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-prettier": "3.0.0",
+    "eslint-plugin-prettier": "3.0.1",
     "husky": "^1.1.2",
-    "jest": "^23.6.0",
+    "jest": "^24.0.0",
     "lint-staged": "^8.0.4",
     "npm-check-updates": "^2.14.3",
     "prettier": "^1.14.3",
